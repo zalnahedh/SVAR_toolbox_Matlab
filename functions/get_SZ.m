@@ -1,7 +1,16 @@
-function [SS,ZZ]=get_SZ(Y)
+function [SS,ZZ]=get_SZ(X)
     if nargin~=1
         error('Pogresan broj argumenata');
     end
+    
+    % put all restrictions into one matrix (impacts)         
+Y=[];
+restrictions=keys(X);
+for i=1:size(X,1)
+    s=restrictions{i};
+    Y=[Y X(s)];
+end
+Y=Y';
     
     %when we want to impose sign and zero restrictions at several horizons 
     %we stack the IRFs into single matrix : impact pattern matrix (Y)
@@ -13,7 +22,7 @@ function [SS,ZZ]=get_SZ(Y)
     number_of_columns=size(Y,2);
     
     %SIGN RESTRICTIONS:
-    %representation of sign restrictions: cell array SS 
+    %representation of sign restrictions: cell array SS
     %each element (S) of cell array SS is selection matrix for given structural
     %shock, if there are no sign restrictions, S matrix doesn't exist, else
     %dimension of S matrix is c x(n*r) where c is number of sign
