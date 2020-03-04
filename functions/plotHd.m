@@ -1,4 +1,4 @@
-function [tt] = plotHd_cum(HDbaseline,HDshocks,info,varSelection,shockSelection,accumP,addBaseline,colors)
+function [tt] = plotHd(HDbaseline,HDshocks,info,varSelection,shockSelection,accumP,addBaseline,colors)
 %-----------------------------------------------------------------------------------------------------------
 % INPUT:
 % HDbaseline:      (variable,horizon,shock) /includes: lag-structure, constant and exogenous variables contribution
