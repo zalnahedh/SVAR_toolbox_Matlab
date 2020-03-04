@@ -1,6 +1,6 @@
 
 %% BAYESIAN VECTOR AUTOREGRESSION MODELS (structural analysis )
-%  BVAR under Block Exogeneity,Sign and Zero Restrictions
+%  BVAR with Block Exogeneity,Sign and Zero Restrictions
 % *****************************************************************************************************************
 %
 % Author : ANTE COBANOV (ante.cobanov@yahoo.com)
