@@ -38,7 +38,7 @@ addpath([get_help_dir_currdir,'/functions']); % set path to helper functions
 cd(currdir)
 
 % reading data from excel
-input_file='data/data_new3.xlsx';
+input_file='data/data.xlsx';
 sheet='hr';
 [data,txt]=xlsread(input_file,sheet);
 names=txt(1,2:end);
@@ -268,8 +268,8 @@ end
 %**************************************************************************************************************************
 %% INDEPENDENT NORMAL WISHART PRIOR  (algorithm)
 %****************************************************************************************************************
-if strcmp(prior,'nwp')
-  [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_nwp(info,d2);
+if strcmp(prior,'inwp')
+  [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_inwp(info,d2);
 end
 
 %**********************************************************************************************************
