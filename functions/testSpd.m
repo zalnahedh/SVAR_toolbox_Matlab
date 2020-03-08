@@ -9,9 +9,9 @@ function test = testSpd(X)
 [~,flag]=chol(X,'lower');
 
 if flag==0 
-    test=1 
+    test=1;
 else
-    test=0
+    test=0;
 end
 
 end
