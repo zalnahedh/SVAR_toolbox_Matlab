@@ -107,9 +107,6 @@ info.m         = info.nvar*info.nlag + info.k;     % dimension of matrix Aplus i
 %  If 'structural', user should define restrictions to structural matrices,use strings : 'A0','Aplus'
 %------------------------------------------------------------------------------------------------------------------------------------------------
 
-% IMPORTANT!!!!!!!!!!!!
-% Take a look at the F_map function, restrictions in vector of restrictions need  to be in this order: A0, Aplus, IRF
-
 info.type_of_restrictions = 'structural';    %set the type of restrictions: 'irf', 'structural' or 'both'
 
 % structural shocks names (defined by imposing sing and zero restrictions)
@@ -130,6 +127,7 @@ impact('long_run')=[0 9 9 9
 % calculate selection matrices: ZZ (zero) and SS (sign)
 [SS,ZZ]=get_SZ(impact);
 % cell array of imposed restrictions (periods: 0,1,..;'long_run'; 'A0' or 'Aplus')
+% Take a look at the F_map function, restrictions in vector of restrictions need  to be in this order: A0, Aplus, IRF
 info.restrictions=keys(impact);
 % zero restrictions selection matrix
 info.Z=ZZ;
