@@ -331,7 +331,7 @@ close;
 
 %**************************************************************************************************************
 
-% Use {plotHd} function to plot Hystorical Decomposition
+% Use {plotHd} function to plot Historical Decomposition
 
 % INPUT:
 % HDbaseline:      (variable,horizon,shock) /includes: lag-structure, constant and exogenous variables contribution
@@ -342,7 +342,7 @@ close;
 % accumP:          select number of periods to accumulate
 %                  (To have YoY growth rates when using log(diff) transformation accumP is 4)
 % addBaseline:     add baseline contribution to figure('yes' or 'no')
-% colors:          set the colors for hystorical decomposition bar plot
+% colors:          set the colors for historical decomposition bar plot
 %                  last color is for baseline and then other shocks { ...,[0 0 1],..}
 %                  red ([1 0 0]), green([0 1 0]), blue([0 0 1]), yellow([1 1 0]), black([0 0 0 ])
 
