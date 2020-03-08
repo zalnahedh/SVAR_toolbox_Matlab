@@ -1,7 +1,12 @@
 function [beta] = drawBetaCondSigma(info,beta0,omega0,sigma)
 
 q=info.nvar*(info.nvar*info.nlag+info.nex+info.cte);
-omega0Inv=invpd(omega0);
+
+%omega0Inv=invpd(omega0);
+
+% omega0 is diagonal matrix, inverse is easily calculated
+omega0Inv=diag(1./diag(omega0));
+
 sigmaInv=invpd(sigma);
 omega1=invpd(omega0Inv+kron(sigmaInv,(info.X)'*info.X));
 beta1=omega1*(omega0Inv*beta0+kron(sigmaInv,(info.X)')*vec(info.Y)); 
