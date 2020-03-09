@@ -73,7 +73,7 @@ else
     time=string(info.time(1:end));
 end
  
-x=datenum(time,'yyyyQQ');
+x=datenum(time,info.format);
 plot(x,series,'LineWidth',3,'color','k');
 datetick('x','yy','keeplimits');
 hold on;
