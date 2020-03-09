@@ -20,6 +20,8 @@ function [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_inwp(info,d2
     count_iterations = 1; %count number of importance sampling draws before showing current status
     count_accept   = 0;   %count number of draws satisfying zero/sign restrictions
     nfinal=0;             %initialize effective sample size
+    
+    wb=waitbar(0, ' Burning in ... ');
     while ((record<=info.maxDraws) && (nfinal<=info.finalDraws)) 
             %display(['DRAW = ',num2str(record)])
             %tic
@@ -94,6 +96,7 @@ function [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_inwp(info,d2
                                     display(['Number of nfinal parameters = ',num2str(nfinal)])
                                     count_iterations =0;
                            end
+                           waitbar(nfinal/info.finalDraws, wb, sprintf('   Effective sample: %d  ; Number of accepted parameters: %d    ',nfinal, count_accept));
                            count_iterations = count_iterations + 1;
                            record=record+1;
                      end

@@ -15,6 +15,9 @@ uisw                    = zeros(count_accept_guess ,1);  % unnormalized importan
     count_iterations = 1;   %count number of importance sampling draws until showing current status
     count_accept   = 0;     %count number of draws satisfying restrictions
     nfinal=0;               %initialize effective sample size
+    
+    wb=waitbar(0);
+    
     while ((record<=info.maxDraws) && (nfinal<=info.finalDraws))
             %display(['DRAW = ',num2str(record)])
             %tic
@@ -88,6 +91,7 @@ uisw                    = zeros(count_accept_guess ,1);  % unnormalized importan
                             display(['Number of nfinal parameters = ',num2str(nfinal)])
                             count_iterations =0;
                    end
+                   waitbar(nfinal/info.finalDraws, wb, sprintf('    Effective sample: %d  ; Number of accepted parameters: %d     ',nfinal, count_accept));
                    count_iterations = count_iterations + 1;
                    record=record+1;
             end
