@@ -12,9 +12,13 @@ function vol_elem = logVolumeElement(f,x,h)
 %  element of f, restricted to the manifold, when evaluated at x.
 %
 
-Dfx=numericalDerivative(f,x);          % m x n matrix
+% change numerical derivative parameters here
+epsilon=1.0e-6;
+order=2;
+
+Dfx=numericalDerivative(f,x,epsilon,order);          % m x n matrix
 if nargin > 2
-    Dhx=numericalDerivative(h,x);      % (n-k) x n matrix
+    Dhx=numericalDerivative(h,x,epsilon,order);      % (n-k) x n matrix
     N=null(Dhx);
     M=Dfx*N;                  % perp(Dhx') - n x k matrix
     vol_elem=0.5*logAbsDet(M'*M);

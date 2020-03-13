@@ -89,7 +89,7 @@ for i=1:numel(sheets)
     % matrix notation:            Y = X*B + U;
     % where:                      Y= [yt(nlag+1);yt(nlag+2); ... ;yt(end)]
     %----------------------------------------------------------------------------------------------------------------------------------------------------
-    prior                          =  "nwp";    % set inwp (independent NW) or nwp (NW)
+    prior                          =  "inwp";    % set inwp (independent NW) or nwp (NW)
     info.maxDraws                  =  1000000;  % maximum number of importance sampling orthogonal-reduced-form (B,Sigma,Q) draws
     info.maxQ                      =  100;      % draw several matrices Q for the same (B,Sigma) to speed up proccess
     info.finalDraws                =  200;      % effective size of importance sampling draws (smaller than accepted draws)
