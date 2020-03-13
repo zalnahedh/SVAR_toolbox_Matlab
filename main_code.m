@@ -14,6 +14,15 @@
 % 86. I am very grateful to my colleagues: Karlo Kotarac & Davor Kunovac
 % for the great suggestions,ideas, comments and helping me to fix some programming
 % bugs.
+
+% UNDER CONSTRUCTION:
+% Problems with large values of importance sampling weights!!
+% Add tests: "Testing the assumptions behind importance sampling" 
+%             Koopman, Siem Jan; Shepard; Neil; Creal; Drew (Journal of
+%             Econometrics)
+
+% Modifications needed: "Inferance in Bayesian Proxy-SVARs"
+%                       Arias; Rubio-Ramirez; Waggoner (2019)
 %***************************************************************************************************************************
 %
 % Matlab code includes importance sampling algorithm under Block Exogeneity,Sign and Zero Restrictions with possibility to include 
