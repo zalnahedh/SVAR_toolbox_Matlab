@@ -29,12 +29,14 @@ zeroMatrix=zeros(nvar*(p-1),nvar);
 
 if p==1
     J=identityMatrix1;
-    A0_inv=inv(A0);
+    %A0_inv=inv(A0);
+     A0_inv=A0\eye(info.nvar);
     F=A{1}*A0_inv;
 else
     J=[identityMatrix1;zeroMatrix];
     F=zeros(nvar*p,nvar*p);
-    A0_inv=inv(A0);
+    %A0_inv=inv(A0);
+     A0_inv=A0\eye(info.nvar);
     for i=1:p
        F(nvar*(i-1)+1:i*nvar,1:nvar)=A{i}*A0_inv;
     end
@@ -52,7 +54,8 @@ for i=1:num_res
            for j=1:p
                L(s)=L(s)-A{j}';
            end
-           L(s)=inv(L(s)); 
+           %L(s)=inv(L(s)); 
+           L(s)=L(s)\eye(info.nvar);
         end
         if ((~strcmp(s,'0')) && (~strcmp(s,'long_run')))
             ss=str2num(s);

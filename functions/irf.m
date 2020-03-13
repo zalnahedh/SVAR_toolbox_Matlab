@@ -30,12 +30,14 @@ zeroMatrix=zeros(nvar*(p-1),nvar);
 
 if p==1
     J=identityMatrix1;
-    A0_inv=inv(A0);
+    %A0_inv=inv(A0);
+    A0_inv=A0\eye(info.nvar);
     F=A{1}*A0_inv;
 else
     J=[identityMatrix1;zeroMatrix];
     F=zeros(nvar*p,nvar*p);
-    A0_inv=inv(A0);
+    %A0_inv=inv(A0);
+    A0_inv=A0\eye(info.nvar);
     for i=1:p
        F(nvar*(i-1)+1:i*nvar,1:nvar)=A{i}*A0_inv;
     end
@@ -47,17 +49,14 @@ for i=1:horizons
     L(int2str(i))=(A0_inv*J'*F^i*J)';
 end
 
-
-
 L('0')=A0_inv';
-
 
 L('long_run')=A0';
 for i=1:p
     L('long_run')=L('long_run')-A{i}';
 end
-L('long_run')=inv(L('long_run'));
- 
+%L('long_run')=inv(L('long_run'));
+ L('long_run')=(L('long_run'))\eye(info.nvar);
 output=L;
  
 end
