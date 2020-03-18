@@ -52,9 +52,9 @@ info.format='yyyyQQ';
 
 sheets={'hr'};
 
-for i=1:numel(sheets)
+for sheet_index=1:numel(sheets)
     
-    sheet=sheets{i};
+    sheet=sheets{sheet_index};
     [data,txt]=xlsread(input_file,sheet);
     names=txt(1,2:end);
     time=txt(2:end,1);
@@ -275,14 +275,14 @@ for i=1:numel(sheets)
     %% NORMAL WISHART PRIOR  (algorithm)
     %**************************************************************************************************************************
     if strcmp(prior,'nwp')
-      [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_nwp(info,d1);
+      [BDraws,SigmaDraws,QDraws,WDraws,nisw,uisw,vol1,vol2,count_accept,nfinal] = draw_nwp(info,d1);
     end
 
     %**************************************************************************************************************************
     %% INDEPENDENT NORMAL WISHART PRIOR  (algorithm)
     %****************************************************************************************************************
     if strcmp(prior,'inwp')
-      [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_inwp(info,d2);
+      [BDraws,SigmaDraws,QDraws,WDraws,nisw,uisw,vol1,vol2,count_accept,nfinal] = draw_inwp(info,d2);
     end
 
     %**********************************************************************************************************
@@ -375,4 +375,11 @@ for i=1:numel(sheets)
     end
 
     %*********************************************************************************************************
+    
+     workspace_name=strcat(sheet,'_workspace.mat');
+     save(workspace_name);
+    
+    
 end
+
+

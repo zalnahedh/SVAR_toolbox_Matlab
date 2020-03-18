@@ -1,12 +1,34 @@
-function [BDraws,SigmaDraws,QDraws,nisw,count_accept,nfinal] = draw_nwp(info,d1)
+function [BDraws,SigmaDraws,QDraws,WDraws,nisw,uisw,vol1,vol2,count_accept,nfinal] = draw_nwp(info,d1)
+%******************************************************************************************************
+%   INPUT:
+%       info ->  structure / SVAR information
+%       d1   ->  structure / impose prior (NORMAL WISHART PRIOR) 
+
+%   OUTPUT:
+%       BDraws          ->  all reduced-form  parameters
+%       SigmaDraws      ->  all reduced-form covariance matrices
+%       QDraws          ->  all orthogonal matrices
+%       WDraws          ->  all w draws
+%       nisw            ->  normalized importance sampling weights
+%       uisw            ->  unnormalized importance sampling weights
+%       vol1            ->  absolute value of logarithm of overall volume element in numerator
+%       vol2            ->  absolute value of logarithm of overall volume element in denumerator
+%       count_accept    ->  total number of draws satisfying restrictions
+%       nfinal          ->  effective number of draws satisfying restrictions
+%**************************************************************************************************
+
+
 
 %=====================================================================================================================================================
 %% INITIALIZATION
-%=====================================================================================================================================================
-count_accept_guess      = 1000;
+
+% we don't know effective size in advance (initial guess for count_accept needed)
+count_accept_guess      = 20000;
+
 BDraws                  = cell([count_accept_guess ,1]); % reduced-form  parameters
 SigmaDraws              = cell([count_accept_guess ,1]); % reduced-form covariance matrices
 QDraws                  = cell([count_accept_guess ,1]); % orthogonal matrices
+WDraws                  = cell([count_accept_guess ,1]); % w draws
 v1_volume_element       = zeros(count_accept_guess ,1);  % absolute value of logarithm of overall volume element in numerator
 v2_volume_element       = zeros(count_accept_guess ,1);  % absolute value of logarithm of overall volume element in denumerator
 uisw                    = zeros(count_accept_guess ,1);  % unnormalized importance sampler weights
@@ -60,7 +82,8 @@ uisw                    = zeros(count_accept_guess ,1);  % unnormalized importan
                             %display('  Sign restrictions satisfied, calculating importance sampler weights...');
                             count_accept=count_accept+1;
                             BDraws{count_accept,1}        = BDraw;
-                            SigmaDraws  {count_accept,1}    = sigmaDraw;
+                            SigmaDraws  {count_accept,1}  = sigmaDraw;
+                            WDraws{count_accept,1}        = w;
                             QDraws{count_accept,1}        = reshape(QDraw,info.nvar,info.nvar);
                             [v1,v2,weight] = computeWeight(y,info,info.type_of_restrictions);
                             %toc
@@ -96,11 +119,16 @@ uisw                    = zeros(count_accept_guess ,1);  % unnormalized importan
                    record=record+1;
             end
     end
-   
+ 
+% output     
 BDraws             =  BDraws(~cellfun('isempty',BDraws ));            
 SigmaDraws         =  SigmaDraws(~cellfun('isempty',SigmaDraws)); 
-QDraws             =  QDraws(~cellfun('isempty',QDraws ));  
+QDraws             =  QDraws(~cellfun('isempty',QDraws ));
+WDraws             =  WDraws(~cellfun('isempty',WDraws ));
 nisw               =  nisw(1:count_accept);
+uisw               =  uisw(1:count_accept);
+vol1               =  v1_volume_element(1:count_accept);
+vol2               =  v2_volume_element(1:count_accept);
     
     
 end
