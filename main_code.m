@@ -374,10 +374,22 @@ for sheet_index=1:numel(sheets)
           close;
     end
 
-    %*********************************************************************************************************
-    
-     workspace_name=strcat(sheet,'_workspace.mat');
-     save(workspace_name);
+%*******************************************************************************************************
+% SAVE  
+%*******************************************************************************************************
+
+%save workspace
+workspace_name=strcat(sheet,'_workspace.mat');
+save(workspace_name);
+
+% save output of "draw_nwp" or "draw_inwp" function to excel file  
+excel_name=strcat(sheet,'_output.xlsx');
+saveOutputExcel(excel_name,BDraws,SigmaDraws,QDraws,WDraws,nisw,uisw,vol1,vol2,count_accept,nfinal)
+
+% save irfs to excel file (lower bound, median and upper bound)
+excel_name=strcat(sheet,'_output.xlsx');
+saveIrfExcel(excel_name,info,IrfDraws)
+%*********************************************************************************************************
     
     
 end
