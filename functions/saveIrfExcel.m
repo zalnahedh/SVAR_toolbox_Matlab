@@ -1,16 +1,22 @@
-function [] = saveIrfExcel(excel_name,info,IrfDraws)
+function [] = saveIrfExcel(excel_name,info,IrfDraws,cumulativeList)
 %**************************************************************************************************
 % save irfs to excel file (lower bound, median and upper bound)
 %**************************************************************************************************
 % INPUT:
 %   excel_name      -> excel file name
 %   info            -> VAR information
-%   IrfDraws        -> impulse response function
+%   IrfDraws        -> impulse response function/ calculated IRFs (variable, shock, horizont, draw)
+%   cumulativeList: list  of variables for which the corresponding impulse responses need to be accumulated
 % OUTPUT:
 %   excel file:
 %   sheet irf:      irf for each variable and for each shock 
 %                   (lower bound, median, upper bound)
-%**************************************************************************************************+
+%**************************************************************************************************
+A=IrfDraws;
+for k=cumulativeList
+    A(k,:,:,:)=cumsum(IrfDraws(k,:,:,:),3);
+end
+
 for j=1:size(info.shocks,2)   
     for i=1:size(info.names,2)
         var_name=strcat('variable: ',info.names{i});
@@ -20,8 +26,6 @@ for j=1:size(info.shocks,2)
         info_position=strcat(shock_position_letter,num2str(var_position));
         column_position=strcat(shock_position_letter,num2str(var_position+1));
         matrix_position=strcat(shock_position_letter,num2str(var_position+2));
-        A=IrfDraws;
-        A(i,:,:,:)=cumsum(IrfDraws(i,:,:,:),3);
         D=reshape(A(i,j,1:end,:),info.horizons,info.nfinal);
         temp=[prctile(D',[16 50 84])];
         column_names={'low','median','up'};

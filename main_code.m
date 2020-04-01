@@ -138,7 +138,10 @@ for sheet_index=1:numel(sheets)
     impact('long_run')=[0 9 9 9       
                          9 9 9 9      
                          9 9 0 9      
-                         9 9 9 9 ] ;   
+                         9 9 9 9 ] ;  
+                     
+    info.impact=impact; 
+    
     % calculate selection matrices: ZZ (zero) and SS (sign)
     [SS,ZZ]=get_SZ(impact);
     % cell array of imposed restrictions (periods: 0,1,..;'long_run'; 'A0' or 'Aplus')
@@ -336,11 +339,16 @@ for sheet_index=1:numel(sheets)
     % variableList:   list of variables, for example: 1:6, [1,4,5]
     % cumulativeList: list  of variables for which the corresponding impulse responses need to be accumulated
 
+    shockList=[1,2,3,4];
+    variableList=[1,2,3,4];
+    cumulativeList=[1,2,3,4];
+
     figure('units','normalized','position',[.1 .1 .95 .95])
-    plotIrf(IrfDraws,info,[1,2,3,4],[1,2,3,4],[1,2,3,4]);
+    plotIrf(IrfDraws,info,shockList,variableList,cumulativeList);
     irf_name=strcat(sheet,"_irf.pdf");
     save2pdf(irf_name);
     close;
+
 
 
     %**************************************************************************************************************
@@ -374,9 +382,9 @@ for sheet_index=1:numel(sheets)
           close;
     end
 
-%*******************************************************************************************************
+%****************************************************************************************************  
 % SAVE  
-%*******************************************************************************************************
+%*****************************************************************************************************
 
 %save workspace
 workspace_name=strcat(sheet,'_workspace.mat');
@@ -388,7 +396,15 @@ saveOutputExcel(excel_name,BDraws,SigmaDraws,QDraws,WDraws,nisw,uisw,vol1,vol2,c
 
 % save irfs to excel file (lower bound, median and upper bound)
 excel_name=strcat(sheet,'_output.xlsx');
-saveIrfExcel(excel_name,info,IrfDraws)
+saveIrfExcel(excel_name,info,IrfDraws,cumulativeList);
+
+% save settings, data, zero and sign restrictions matrices to excel file
+excel_name=strcat(sheet,'_output.xlsx');
+saveInfoExcel(excel_name,info)
+
+%save historical decompositions to excel file (lower bound, median and upper bound)
+excel_name=strcat(sheet,'_output.xlsx');
+saveHdExcel(excel_name,info,accumP,HDshocks,HDbaseline)
 %*********************************************************************************************************
     
     
